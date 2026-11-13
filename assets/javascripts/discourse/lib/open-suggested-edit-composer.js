@@ -35,6 +35,7 @@ export async function openSuggestedEditComposer(composer, post) {
     composerOptions.reply = suggestion.raw_suggestion;
     composerOptions.metaData.existingSuggestionId = suggestion.id;
     composerOptions.metaData.reason = suggestion.reason;
+    composerOptions.metaData.basePostVersion = suggestion.base_post_version;
   }
 
   await composer.open(composerOptions);

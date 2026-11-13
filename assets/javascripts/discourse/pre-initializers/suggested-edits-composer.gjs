@@ -101,6 +101,7 @@ export default {
               await updateSuggestedEdit(meta.existingSuggestionId, {
                 raw: model.reply,
                 reason: meta.reason,
+                basePostVersion: meta.basePostVersion,
               });
               this.toasts.success({
                 data: {

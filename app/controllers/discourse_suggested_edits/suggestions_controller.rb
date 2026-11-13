@@ -75,6 +75,9 @@ module DiscourseSuggestedEdits
           render_json_error(step.error, status: :bad_request)
         end
         on_failed_step(:ensure_pending) { |step| render_json_error(step.error, status: :conflict) }
+        on_failed_step(:ensure_same_base) do |step|
+          render_json_error(step.error, status: :conflict)
+        end
         on_failed_step(:ensure_raw_changed) do |step|
           render_json_error(step.error, status: :bad_request)
         end
@@ -150,7 +153,7 @@ module DiscourseSuggestedEdits
     end
 
     def update_params
-      params.permit(:raw, :reason).to_h.merge(suggestion_id: params[:id])
+      params.permit(:raw, :reason, :base_post_version).to_h.merge(suggestion_id: params[:id])
     end
 
     def apply_params

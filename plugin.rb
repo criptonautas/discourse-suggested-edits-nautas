@@ -22,6 +22,7 @@ after_initialize do
   require_relative "lib/discourse_suggested_edits/register_filters"
   require_relative "lib/discourse_suggested_edits/change_applier"
   require_relative "lib/discourse_suggested_edits/change_extractor"
+  require_relative "lib/discourse_suggested_edits/change_rebaser"
   require_relative "lib/discourse_suggested_edits/payload_validator"
   require_relative "lib/discourse_suggested_edits/guardian_extensions"
   require_relative "lib/discourse_suggested_edits/publisher"

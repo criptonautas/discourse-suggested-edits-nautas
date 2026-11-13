@@ -27,10 +27,10 @@ export function createSuggestedEdit({ postId, raw, reason }) {
   });
 }
 
-export function updateSuggestedEdit(id, { raw, reason }) {
+export function updateSuggestedEdit(id, { raw, reason, basePostVersion }) {
   return ajax(`${BASE}/${id}`, {
     type: "PUT",
-    data: { raw, reason },
+    data: { raw, reason, base_post_version: basePostVersion },
   });
 }
 

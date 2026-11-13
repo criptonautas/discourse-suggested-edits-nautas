@@ -66,6 +66,7 @@ class DiscourseSuggestedEdits::ApplySuggestion
       apply_overrides!(accepted_changes, params.change_overrides)
       ensure_current_post_version!(suggested_edit)
 
+      old_version = suggested_edit.post.version
       new_raw = build_new_raw!(suggested_edit, accepted_changes)
       apply_post_revision!(suggested_edit, new_raw, guardian.user)
 
@@ -75,7 +76,8 @@ class DiscourseSuggestedEdits::ApplySuggestion
         applied_at: Time.current,
       )
 
-      stale_user_ids = stale_other_suggestions!(suggested_edit)
+      stale_user_ids =
+        rebase_other_suggestions!(suggested_edit, accepted_changes, old_version, new_raw)
       context[:resolved_user_ids] = ([suggested_edit.user_id] + stale_user_ids).uniq
     end
   rescue StaleSuggestionError
@@ -163,21 +165,43 @@ class DiscourseSuggestedEdits::ApplySuggestion
           suggested_edit.post.errors.full_messages.first || I18n.t("invalid_params")
   end
 
-  def stale_other_suggestions!(suggested_edit)
-    stale_suggestions =
-      SuggestedEdit
-        .pending
-        .where(post_id: suggested_edit.post_id)
-        .where.not(id: suggested_edit.id)
-        .where("base_post_version < ?", suggested_edit.post.version)
+  # Other pending suggestions move onto the new post version unless they conflict with what was
+  # just applied; those that conflict become stale. Returns the user ids of the stale ones.
+  def rebase_other_suggestions!(suggested_edit, accepted_changes, old_version, new_raw)
+    post = suggested_edit.post
+    # Offsets are only shifted by the accepted changes, so any cleanup PostRevisor did invalidates them.
+    rebasable = post.raw == new_raw
+    stale_user_ids = []
 
-    stale_user_ids = stale_suggestions.pluck(:user_id)
-    if stale_user_ids.present?
-      stale_suggestions.update_all(
-        status: SuggestedEdit.statuses[:stale],
-        updated_at: Time.zone.now,
-      )
-    end
+    SuggestedEdit
+      .pending
+      .where(post_id: post.id)
+      .where.not(id: suggested_edit.id)
+      .includes(:edit_changes)
+      .each do |other|
+        rebased =
+          if rebasable && other.base_post_version == old_version
+            DiscourseSuggestedEdits::ChangeRebaser.call(
+              applied: accepted_changes,
+              changes: other.edit_changes,
+              new_raw: post.raw,
+            )
+          end
+
+        # An empty rebased suggestion would fail validation and roll back the whole apply.
+        if rebased && rebased.raw.present?
+          other
+            .edit_changes
+            .sort_by(&:position)
+            .zip(rebased.changes) do |change, shifted|
+              change.update_columns(start_offset: shifted.start_offset)
+            end
+          other.update!(base_post_version: post.version, raw_suggestion: rebased.raw)
+        else
+          other.update_columns(status: SuggestedEdit.statuses[:stale], updated_at: Time.zone.now)
+          stale_user_ids << other.user_id
+        end
+      end
 
     stale_user_ids
   end

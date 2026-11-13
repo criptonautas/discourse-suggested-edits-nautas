@@ -7,6 +7,7 @@ class DiscourseSuggestedEdits::ReviseSuggestion
     attribute :suggestion_id, :integer
     attribute :raw, :string
     attribute :reason, :string
+    attribute :base_post_version, :integer
 
     validates :suggestion_id, presence: true
     validates :raw, presence: true
@@ -21,6 +22,7 @@ class DiscourseSuggestedEdits::ReviseSuggestion
     transaction do
       step :lock_records
       step :ensure_pending
+      step :ensure_same_base
       step :ensure_raw_changed
       step :replace_suggestion
       step :store_changes
@@ -62,6 +64,15 @@ class DiscourseSuggestedEdits::ReviseSuggestion
     return if suggested_edit.pending?
 
     fail!(I18n.t("discourse_suggested_edits.errors.not_pending"))
+  end
+
+  # The suggestion may have been rebased after the composer loaded it; diffing that older raw
+  # against the current post would turn the applied changes into revert hunks.
+  def ensure_same_base(suggested_edit:, params:)
+    return if params.base_post_version.nil?
+    return if params.base_post_version == suggested_edit.base_post_version
+
+    fail!(I18n.t("discourse_suggested_edits.errors.base_changed"))
   end
 
   def ensure_raw_changed(suggested_edit:, params:)

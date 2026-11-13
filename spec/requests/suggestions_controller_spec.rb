@@ -209,6 +209,33 @@ RSpec.describe DiscourseSuggestedEdits::SuggestionsController do
       )
     end
 
+    it "rejects a revision based on an older version of the suggestion" do
+      sign_in(suggester)
+      stale_base = suggestion.base_post_version
+      suggestion.update!(base_post_version: stale_base + 1)
+
+      put "/suggested-edits/suggestions/#{suggestion.id}.json",
+          params: {
+            raw: "Revised content.\n",
+            base_post_version: stale_base,
+          }
+
+      expect(response.status).to eq(409)
+      expect(suggestion.reload.raw_suggestion).to eq("Suggested content.\n")
+    end
+
+    it "accepts a revision based on the current version of the suggestion" do
+      sign_in(suggester)
+
+      put "/suggested-edits/suggestions/#{suggestion.id}.json",
+          params: {
+            raw: "Revised content.\n",
+            base_post_version: suggestion.base_post_version,
+          }
+
+      expect(response.status).to eq(200)
+    end
+
     it "rejects overlong reasons" do
       sign_in(suggester)
 

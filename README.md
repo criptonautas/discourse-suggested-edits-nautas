@@ -10,7 +10,7 @@ Allows community members to suggest edits to first posts in configured categorie
 
 **Revising / withdrawing** — A suggestion author can revise their pending suggestion or withdraw it before a reviewer acts on it.
 
-**Staleness** — If the post is edited after a suggestion is created, the suggestion is marked stale and cannot be applied.
+**Staleness** — When a reviewer applies a suggestion, other pending suggestions on the same post are moved onto the new version, unless they change the same lines; those are marked stale and cannot be applied. Any other edit to the post marks all its pending suggestions stale. A revision saved from a composer opened before its suggestion was moved is rejected, so the author reopens it on the current text.
 
 ## Configuration
 

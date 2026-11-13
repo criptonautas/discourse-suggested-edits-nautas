@@ -120,6 +120,70 @@ RSpec.describe DiscourseSuggestedEdits::ApplySuggestion do
       it { is_expected.to fail_a_step(:apply_changes) }
     end
 
+    context "when other suggestions are pending on the same post" do
+      fab!(:other_user) { Fabricate(:user, groups: [suggest_group]) }
+      fab!(:third_user) { Fabricate(:user, groups: [suggest_group]) }
+
+      def add_changes(edit)
+        DiscourseSuggestedEdits::ChangeExtractor
+          .call(original_raw: post.raw, new_raw: edit.raw_suggestion)
+          .each { |change| Fabricate(:suggested_edit_change, suggested_edit: edit, **change) }
+        edit
+      end
+
+      def create_other(user, raw)
+        add_changes(
+          Fabricate(
+            :suggested_edit,
+            post: post,
+            user: user,
+            raw_suggestion: raw,
+            base_post_version: post.version,
+          ),
+        )
+      end
+
+      # Saved posts have no trailing newline, and the reviewed suggestion grows line two.
+      before do
+        post.update_column(:raw, "Line one\nLine two\nLine three\nLine four")
+        suggestion.edit_changes.delete_all
+        suggestion.update!(raw_suggestion: "Line one\nLine TWO and more\nLine three\nLine four")
+        add_changes(suggestion).reload
+      end
+
+      it "rebases non-overlapping suggestions onto the new version" do
+        other = create_other(other_user, "Line one\nLine two\nLine three\nLine FOUR")
+
+        expect(result).to run_successfully
+
+        other.reload
+        expect(other).to be_pending
+        expect(other.base_post_version).to eq(post.reload.version)
+        expect(other.raw_suggestion).to eq("Line one\nLine TWO and more\nLine three\nLine FOUR")
+        expect(
+          DiscourseSuggestedEdits::ChangeApplier.call(raw: post.raw, changes: other.edit_changes),
+        ).to eq(other.raw_suggestion)
+      end
+
+      it "marks suggestions as stale when the saved raw differs from the applied changes" do
+        post.update_column(:raw, "#{post.raw}\n")
+        other = create_other(other_user, "Line ONE\nLine two\nLine three\nLine four\n")
+
+        expect(result).to run_successfully
+
+        expect(post.reload.raw).not_to end_with("\n")
+        expect(other.reload).to be_stale
+      end
+
+      it "marks overlapping suggestions as stale" do
+        other = create_other(third_user, "Line one\nLine 2\nLine three\nLine four")
+
+        expect(result).to run_successfully
+
+        expect(other.reload).to be_stale
+      end
+    end
+
     context "when suggestion is stale" do
       before { post.update_column(:version, post.version + 1) }
 

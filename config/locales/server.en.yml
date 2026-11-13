@@ -21,3 +21,4 @@ en:
       not_permitted: "You are not permitted to perform this action."
       already_pending: "You already have a pending suggested edit for this post."
       stale: "This suggestion is stale because the post has been edited since it was made."
+      base_changed: "Your suggestion was updated to the latest version of the post. Reopen it and make your changes again."
