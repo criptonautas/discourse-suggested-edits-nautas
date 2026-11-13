@@ -2,7 +2,7 @@ import { tracked } from "@glimmer/tracking";
 import { click, fillIn, render } from "@ember/test-helpers";
 import { module, test } from "qunit";
 import { setupRenderingTest } from "discourse/tests/helpers/component-test";
-import SuggestedEditChangeItem from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edit-change-item";
+import SuggestedEditChangeItem from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edit-change-item";
 
 module(
   "Integration | Component | suggested-edit-change-item",

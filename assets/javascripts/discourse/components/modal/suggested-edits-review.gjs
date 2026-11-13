@@ -15,19 +15,19 @@ import { afterRender } from "discourse/lib/decorators";
 import KeyValueStore from "discourse/lib/key-value-store";
 import { eq } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
-import SuggestedEditChangeItem from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edit-change-item";
-import SuggestedEditContext from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edit-context";
+import SuggestedEditChangeItem from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edit-change-item";
+import SuggestedEditContext from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edit-context";
 import SuggestedEditRenderedPreview, {
   unavailableNotice,
-} from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edit-rendered-preview";
-import SuggestedEditsStaleWarning from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edits-stale-warning";
-import sanitizeRenderedPreview from "discourse/plugins/discourse-suggested-edits/discourse/lib/sanitize-rendered-preview";
+} from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edit-rendered-preview";
+import SuggestedEditsStaleWarning from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edits-stale-warning";
+import sanitizeRenderedPreview from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/sanitize-rendered-preview";
 import {
   applySuggestedEdit,
   dismissSuggestedEdit,
   fetchSuggestedEdit,
   fetchSuggestedEdits,
-} from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+} from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 const VIEW_MODE_KEY = "suggested-edits-view-mode";
 const VIEW_MODES = ["inline", "side-by-side", "source"];

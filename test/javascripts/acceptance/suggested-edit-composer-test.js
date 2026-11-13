@@ -3,7 +3,7 @@ import { test } from "qunit";
 import sinon from "sinon";
 import Composer from "discourse/models/composer";
 import { acceptance } from "discourse/tests/helpers/qunit-helpers";
-import { SUGGEST_EDIT_ACTION } from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+import { SUGGEST_EDIT_ACTION } from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 function buildComposerModel(owner, properties = {}) {
   const store = owner.lookup("service:store");

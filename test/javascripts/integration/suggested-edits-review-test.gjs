@@ -19,8 +19,8 @@ import { forceMobile } from "discourse/lib/mobile";
 import { disableClearA11yAnnouncementsInTests } from "discourse/services/a11y";
 import { setupRenderingTest } from "discourse/tests/helpers/component-test";
 import pretender, { response } from "discourse/tests/helpers/create-pretender";
-import SuggestedEditsReviewModal from "discourse/plugins/discourse-suggested-edits/discourse/components/modal/suggested-edits-review";
-import SuggestedEditsStaleWarning from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edits-stale-warning";
+import SuggestedEditsReviewModal from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/modal/suggested-edits-review";
+import SuggestedEditsStaleWarning from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edits-stale-warning";
 
 const UPDATED_AT = "2026-11-12T10:00:00.000Z";
 const LATER_UPDATED_AT = "2026-11-12T11:00:00.000Z";

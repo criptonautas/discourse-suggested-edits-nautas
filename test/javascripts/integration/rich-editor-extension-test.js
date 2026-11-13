@@ -6,8 +6,8 @@ import {
 } from "discourse/lib/composer/rich-editor-extensions";
 import { setupRenderingTest } from "discourse/tests/helpers/component-test";
 import { setupRichEditor } from "discourse/tests/helpers/rich-editor-helper";
-import richEditorExtension from "discourse/plugins/discourse-suggested-edits/discourse/lib/rich-editor-extension";
-import { setSuggestEditActive } from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+import richEditorExtension from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/rich-editor-extension";
+import { setSuggestEditActive } from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 module(
   "Integration | Component | prosemirror-editor - suggested edits extension",

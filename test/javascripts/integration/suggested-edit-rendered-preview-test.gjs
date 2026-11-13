@@ -3,8 +3,8 @@ import { module, test } from "qunit";
 import sinon from "sinon";
 import { sanitizeAsync } from "discourse/lib/text";
 import { setupRenderingTest } from "discourse/tests/helpers/component-test";
-import SuggestedEditRenderedPreview from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edit-rendered-preview";
-import sanitizeRenderedPreview from "discourse/plugins/discourse-suggested-edits/discourse/lib/sanitize-rendered-preview";
+import SuggestedEditRenderedPreview from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edit-rendered-preview";
+import sanitizeRenderedPreview from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/sanitize-rendered-preview";
 
 const PREVIEW = {
   available: true,

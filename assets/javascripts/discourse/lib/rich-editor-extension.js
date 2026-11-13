@@ -1,7 +1,7 @@
 import {
   getOriginalRaw,
   isSuggestEditActive,
-} from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+} from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 /** @type {RichEditorExtension} */
 const extension = {

@@ -2,7 +2,7 @@ import { ajax } from "discourse/lib/ajax";
 import {
   fetchSuggestedEdit,
   SUGGEST_EDIT_ACTION,
-} from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+} from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 function buildSuggestedEditDraftKey(postId) {
   // Suggested edits never persist drafts, so use a one-shot key per session.

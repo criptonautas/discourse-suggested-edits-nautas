@@ -1,8 +1,8 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { i18n } from "discourse-i18n";
-import SuggestEditButton from "discourse/plugins/discourse-suggested-edits/discourse/components/suggest-edit-button";
-import richEditorExtension from "discourse/plugins/discourse-suggested-edits/discourse/lib/rich-editor-extension";
-import { SUGGEST_EDIT_ACTION } from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+import SuggestEditButton from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggest-edit-button";
+import richEditorExtension from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/rich-editor-extension";
+import { SUGGEST_EDIT_ACTION } from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 function initializePlugin(api) {
   const siteSettings = api.container.lookup("service:site-settings");

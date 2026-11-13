@@ -3,7 +3,7 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import DButton from "discourse/components/d-button";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import { openSuggestedEditComposer } from "discourse/plugins/discourse-suggested-edits/discourse/lib/open-suggested-edit-composer";
+import { openSuggestedEditComposer } from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/open-suggested-edit-composer";
 
 export default class SuggestEditButton extends Component {
   @service composer;

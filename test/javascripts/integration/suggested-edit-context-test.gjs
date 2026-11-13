@@ -10,8 +10,8 @@ import {
 import { module, test } from "qunit";
 import sinon from "sinon";
 import { setupRenderingTest } from "discourse/tests/helpers/component-test";
-import SuggestedEditContext from "discourse/plugins/discourse-suggested-edits/discourse/components/suggested-edit-context";
-import sanitizeRenderedPreview from "discourse/plugins/discourse-suggested-edits/discourse/lib/sanitize-rendered-preview";
+import SuggestedEditContext from "discourse/plugins/discourse-suggested-edits-nautas/discourse/components/suggested-edit-context";
+import sanitizeRenderedPreview from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/sanitize-rendered-preview";
 
 const GAP = {
   id: "start-11",

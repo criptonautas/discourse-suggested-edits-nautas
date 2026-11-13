@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# name: discourse-suggested-edits
+# name: discourse-suggested-edits-nautas
 # about: Allows users to suggest edits to first posts in configured categories/tags
 # version: 0.1.0
-# authors: Discourse
-# url: https://github.com/discourse/discourse/tree/main/plugins/discourse-suggested-edits
+# authors: Discourse — Forked by Criptonautas
+# url: https://github.com/criptonautas/discourse-suggested-edits-nautas
 
 enabled_site_setting :suggested_edits_enabled
 
@@ -13,7 +13,7 @@ register_asset "stylesheets/suggested-edits.scss"
 register_svg_icon "pen-to-square"
 
 module ::DiscourseSuggestedEdits
-  PLUGIN_NAME = "discourse-suggested-edits"
+  PLUGIN_NAME = "discourse-suggested-edits-nautas"
 end
 
 require_relative "lib/discourse_suggested_edits/engine"

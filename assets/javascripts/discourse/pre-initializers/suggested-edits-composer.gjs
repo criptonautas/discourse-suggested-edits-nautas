@@ -6,7 +6,7 @@ import {
   setSuggestEditActive,
   SUGGEST_EDIT_ACTION,
   updateSuggestedEdit,
-} from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+} from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 function isSuggestedEditAction(action) {
   return action === SUGGEST_EDIT_ACTION;

@@ -5,7 +5,7 @@ import { action } from "@ember/object";
 import { schedule } from "@ember/runloop";
 import icon from "discourse/helpers/d-icon";
 import { i18n } from "discourse-i18n";
-import { SUGGEST_EDIT_ACTION } from "discourse/plugins/discourse-suggested-edits/discourse/lib/suggested-edits-api";
+import { SUGGEST_EDIT_ACTION } from "discourse/plugins/discourse-suggested-edits-nautas/discourse/lib/suggested-edits-api";
 
 export default class SuggestedEditReason extends Component {
   @tracked showInput = false;
