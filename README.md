@@ -8,7 +8,7 @@ Fork of [discourse/discourse-suggested-edits](https://github.com/discourse/disco
 
 ## What this fork changes
 
-- **Several suggestions per post.** Applying a suggestion no longer marks every other pending suggestion on the post as stale. Suggestions that change other lines are moved onto the new version; only those that touch the same lines become stale. This change is proposed upstream.
+- **Several suggestions per post.** Applying a suggestion no longer marks every other pending suggestion on the post as stale. Suggestions that change other lines are moved onto the new version; only those that touch the same lines become stale. We plan to propose this change upstream.
 - **Safe revisions.** A revision saved from a composer opened before its suggestion was moved is rejected, so it cannot undo the change that was just applied.
 - Plugin renamed to `discourse-suggested-edits-nautas`. Install it in a directory with that name.
 

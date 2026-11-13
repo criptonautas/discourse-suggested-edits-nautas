@@ -8,7 +8,7 @@ Fork de [discourse/discourse-suggested-edits](https://github.com/discourse/disco
 
 ## Qué cambia este fork
 
-- **Varias sugerencias por post.** Aplicar una sugerencia ya no marca como obsoletas todas las demás sugerencias pendientes del post. Las que cambian otras líneas pasan a la versión nueva; solo quedan obsoletas las que tocan las mismas líneas. Este cambio está propuesto upstream.
+- **Varias sugerencias por post.** Aplicar una sugerencia ya no marca como obsoletas todas las demás sugerencias pendientes del post. Las que cambian otras líneas pasan a la versión nueva; solo quedan obsoletas las que tocan las mismas líneas. Planeamos proponer este cambio upstream.
 - **Revisiones seguras.** Se rechaza una revisión guardada desde un composer abierto antes de que su sugerencia pasara a la versión nueva, así no puede deshacer el cambio recién aplicado.
 - Plugin renombrado a `discourse-suggested-edits-nautas`. Instalalo en un directorio con ese nombre.
 
