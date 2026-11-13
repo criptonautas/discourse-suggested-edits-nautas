@@ -1,8 +1,33 @@
-# discourse-suggested-edits
+# discourse-suggested-edits-nautas
+
+**ENGLISH** | [ESPAÑOL](README.es.md)
+
+Maintained by Criptonautas. Not affiliated with or endorsed by Discourse (Civilized Discourse Construction Kit, Inc.).
+
+Fork of [discourse/discourse-suggested-edits](https://github.com/discourse/discourse-suggested-edits), the experimental suggested edits plugin. Upstream marks it as experimental and not ready for production.
+
+## What this fork changes
+
+- **Several suggestions per post.** Applying a suggestion no longer marks every other pending suggestion on the post as stale. Suggestions that change other lines are moved onto the new version; only those that touch the same lines become stale. This change is proposed upstream.
+- **Safe revisions.** A revision saved from a composer opened before its suggestion was moved is rejected, so it cannot undo the change that was just applied.
+- Plugin renamed to `discourse-suggested-edits-nautas`. Install it in a directory with that name.
+
+## Installation
+
+```yaml
+hooks:
+  after_code:
+    - exec:
+        cd: $home/plugins
+        cmd:
+          - git clone https://github.com/criptonautas/discourse-suggested-edits-nautas.git
+```
+
+## Upstream documentation
 
 Allows community members to suggest edits to first posts in configured categories or tags. Designated reviewers can accept, reject, or cherry-pick individual changes before applying them to the post.
 
-## How it works
+### How it works
 
 **Suggesting an edit** — Members of the configured suggest group see a "Suggest Edit" button on eligible first posts. Clicking it opens the composer pre-filled with the original post content. After making changes (and optionally providing a reason), the user submits the suggestion. The plugin extracts individual change hunks automatically.
 
@@ -12,7 +37,7 @@ Allows community members to suggest edits to first posts in configured categorie
 
 **Staleness** — When a reviewer applies a suggestion, other pending suggestions on the same post are moved onto the new version, unless they change the same lines; those are marked stale and cannot be applied. Any other edit to the post marks all its pending suggestions stale. A revision saved from a composer opened before its suggestion was moved is rejected, so the author reopens it on the current text.
 
-## Configuration
+### Configuration
 
 Enable the plugin and configure it under Admin > Settings:
 
@@ -26,13 +51,13 @@ Enable the plugin and configure it under Admin > Settings:
 | `suggested_edits_max_creates_per_minute` | Rate limit for creating suggestions | `5` |
 | `suggested_edits_max_revisions_per_minute` | Rate limit for revising suggestions | `10` |
 
-## Constraints
+### Constraints
 
 - Only first posts are eligible for suggestions.
 - A user can have at most one pending suggestion per post.
 - The suggested text must differ from the original and respect the `min_first_post_length` site setting.
 
-## Dependency maintenance
+### Dependency maintenance
 
 The root `package.json`/`pnpm-lock.yaml` and `Gemfile`/`Gemfile.lock` are development lint/type-checking tools, not the plugin's runtime dependencies. Discourse supplies the plugin's runtime dependencies.
 
@@ -53,10 +78,16 @@ The dependency-checks workflow runs the audits on pull requests and weekly. Depe
 When changing dependencies, also run the plugin's Rails, browser, and JavaScript tests from a Discourse checkout:
 
 ```bash
-LOAD_PLUGINS=1 bin/rspec plugins/discourse-suggested-edits/spec
-bin/qunit plugins/discourse-suggested-edits/test/javascripts
+LOAD_PLUGINS=1 bin/rspec plugins/discourse-suggested-edits-nautas/spec
+bin/qunit plugins/discourse-suggested-edits-nautas/test/javascripts
 ```
 
-## Automation
+### Automation
 
 This plugin does not ship a standalone MCP server or documentation-refresh agent. Suggestions can be managed through the plugin's HTTP API. Any future MCP tooling should integrate with the shared Discourse MCP rather than introduce a separate server here.
+
+## License
+
+MIT (upstream: Sam). Modifications © 2026 Criptonautas. See [LICENSE](LICENSE).
+
+Our additions to this README are under [CC BY-NC-SA 4.0](CC-BY-NC-SA-4.0.txt); text from the original project keeps its license.
